@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oxygen — Стоматология</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #1a2b3c;
+    background: #f7fbfd;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #e3eef5;
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled { box-shadow: 0 4px 24px rgba(0, 120, 180, 0.08); }
+
+  .nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.45rem;
+    letter-spacing: -0.5px;
+    color: #0077b6;
+    user-select: none;
+  }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 119, 182, 0.35);
+  }
+  .logo span { color: #00b4d8; }
+
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: #3d5a70;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 2px;
+    background: #00b4d8;
+    transition: width 0.25s;
+  }
+  .nav-links a:hover { color: #0077b6; }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    color: #fff;
+    border: none;
+    padding: 11px 26px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(0, 119, 182, 0.3);
+    font-family: inherit;
+  }
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 119, 182, 0.4);
+  }
+  .nav-cta:active { transform: translateY(0) scale(0.97); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 120px 24px 80px;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0, 180, 216, 0.13), transparent),
+      radial-gradient(ellipse 60% 50% at 10% 80%, rgba(0, 119, 182, 0.09), transparent),
+      #f7fbfd;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -180px; right: -180px;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0,180,216,0.12), rgba(0,119,182,0.06));
+    animation: float 9s ease-in-out infinite;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: -120px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0,180,216,0.08), transparent);
+    animation: float 11s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-30px) scale(1.04); }
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #e6f7fc;
+    color: #0077b6;
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 7px 16px;
+    border-radius: 50px;
+    margin-bottom: 22px;
+    border: 1px solid #bce9f5;
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: #00b4d8;
+    border-radius: 50%;
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,180,216,0.5); }
+    50% { box-shadow: 0 0 0 7px rgba(0,180,216,0); }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+    font-weight: 800;
+    color: #0a2233;
+    margin-bottom: 22px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    font-size: 1.08rem;
+    color: #52708a;
+    max-width: 480px;
+    margin-bottom: 34px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    color: #fff;
+    border: none;
+    padding: 15px 34px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 22px rgba(0, 119, 182, 0.35);
+    font-family: inherit;
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 119, 182, 0.45);
+  }
+  .btn-primary:active { transform: translateY(-1px) scale(0.98); }
+
+  .btn-secondary {
+    background: #fff;
+    color: #0077b6;
+    border: 2px solid #cfe8f3;
+    padding: 13px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    font-family: inherit;
+  }
+  .btn-secondary:hover {
+    border-color: #00b4d8;
+    background: #f0fbff;
+    transform: translateY(-3px);
+  }
+  .btn-secondary:active { transform: translateY(-1px) scale(0.98); }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .tooth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 28px;
+    padding: 36px 32px;
+    box-shadow: 0 30px 70px rgba(0, 119, 182, 0.16);
+    border: 1px solid #eaf4f9;
+    position: relative;
+    z-index: 2;
+  }
+  .tooth-emoji {
+    font-size: 5.5rem;
+    text-align: center;
+    display: block;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 12px 24px rgba(0,180,216,0.35));
+    animation: bounce 3.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  .tooth-card h3 {
+    text-align: center;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+    color: #0a2233;
+  }
+  .tooth-card .sub {
+    text-align: center;
+    color: #7a99ad;
+    font-size: 0.88rem;
+    margin-bottom: 22px;
+  }
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid #edf5f9;
+  }
+  .stat {
+    text-align: center;
+    flex: 1;
+  }
+  .stat b {
+    display: block;
+    font-size: 1.35rem;
+    color: #0077b6;
+    font-weight: 800;
+  }
+  .stat small {
+    font-size: 0.74rem;
+    color: #8aa5b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- SERVICES ---------- */
+  section { padding: 90px 24px; }
+
+  .section-head {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 56px;
+  }
+  .section-tag {
+    display: inline-block;
+    color: #00b4d8;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-head h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -1px;
+    color: #0a2233;
+    margin-bottom: 14px;
+    font-weight: 800;
+  }
+  .section-head p { color: #6b8a9e; }
+
+  .services-grid {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: #fff;
+    border-radius: 22px;
+    padding: 34px 28px;
+    border: 1px solid #eaf4f9;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00b4d8, #0077b6);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 48px rgba(0, 119, 182, 0.13);
+    border-color: #c8e9f5;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #e0f7fc, #cceef9);
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+  }
+  .service-card:hover .service-icon { transform: scale(1.1) rotate(-4deg); }
+
+  .service-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #0a2233;
+  }
+  .service-card p {
+    font-size: 0.9rem;
+    color: #7593a8;
+    line-height: 1.55;
+  }
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: linear-gradient(120deg, #0077b6, #00b4d8);
+    border-radius: 32px;
+    padding: 64px 48px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0, 119, 182, 0.3);
+  }
+  .cta-band::before {
+    content: '🦷';
+    position: absolute;
+    font-size: 14rem;
+    opacity: 0.07;
+    top: -40px; right: -20px;
+    transform: rotate(-15deg);
+  }
+  .cta-band h2 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    margin-bottom: 14px;
+    letter-spacing: -0.5px;
+  }
+  .cta-band p {
+    opacity: 0.88;
+    margin-bottom: 30px;
+    font-size: 1.02rem;
+  }
+  .btn-white {
+    background: #fff;
+    color: #0077b6;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    font-family: inherit;
+    position: relative;
+    z-index: 2;
+  }
+  .btn-white:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+  }
+  .btn-white:active { transform: scale(0.97); }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: #0a2233;
+    color: #8fb0c4;
+    padding: 60px 24px 30px;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  footer .logo { color: #fff; margin-bottom: 14px; }
+  footer .logo span { color: #4dd0e1; }
+  footer p { font-size: 0.9rem; line-height: 1.7; }
+  footer h4 {
+    color: #fff;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul a {
+    color: #8fb0c4;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  footer ul a:hover { color: #4dd0e1; }
+  .footer-bottom {
+    max-width: 1150px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 24px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #5f7f94;
+  }
+
+  /* ---------- TOAST ---------- */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: #0a2233;
+    color: #fff;
+    padding: 15px 28px;
+    border-radius: 50px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    z-index: 999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ---------- REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 44px; text-align: center; }
+    .hero p { margin-left: auto; margin-right: auto; }
+    .hero-buttons { justify-content: center; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .nav { height: 64px; }
+    .nav-cta { padding: 9px 18px; font-size: 0.85rem; }
+    section { padding: 64px 18px; }
+    .cta-band { padding: 48px 24px; border-radius: 24px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+    .tooth-card { padding: 28px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header id="header">
+  <nav class="nav">
+    <div class="logo">
+      <div class="logo-icon">🦷</div>
+      Oxy<span>gen</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#about">О клинике</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <button class="nav-cta" onclick="fakeAction('Запись на приём')">Записаться</button>
+  </nav>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero" id="about">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Клиника работает 24/7
+      </div>
+      <h1>Здоровая улыбка<br><em>на кислороде</em></h1>
+      <p>
+        Современная стоматология без боли и стресса. Лечение под микроскопом,
+        цифровая диагностика и забота о каждом пациенте.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary" onclick="fakeAction('Запись на приём')">
+          Записаться онлайн
+        </button>
+        <button class="btn-secondary" onclick="fakeAction('Прайс-лист')">
+          Узнать цены
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="tooth-card">
+        <span class="tooth-emoji">🦷</span>
+        <h3>Бесплатная консультация</h3>
+        <div class="sub">Компьютерная диагностика в подарок</div>
+        <div class="stat-row">
+          <div class="stat"><b>12k+</b><small>Пациентов</small></div>
+          <div class="stat"><b>15</b><small>Лет опыта</small></div>
+          <div class="stat"><b>4.9★</b><small>Рейтинг</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SERVICES ===== -->
+<section id="services">
+  <div class="section-head reveal">
+    <div class="section-tag">Наши услуги</div>
+    <h2>Полный спектр стоматологии</h2>
+    <p>От профилактики до имплантации — всё в одном месте</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal" onclick="fakeAction('Лечение кариеса')">
+      <div class="service-icon">🪥</div>
+      <h3>Лечение кариеса</h3>
+      <p>Безболезненное лечение с использованием современных пломбировочных материалов.</p>
+    </div>
+    <div class="service-card reveal" onclick="fakeAction('Имплантация')">
+      <div class="service-icon">🔩</div>
+      <h3>Имплантация</h3>
+      <p>Установка имплантов премиум-класса с пожизненной гарантией на приживаемость.</p>
+    </div>
+    <div class="service-card reveal" onclick="fakeAction('Отбеливание')">
+      <div class="service-icon">✨</div>
+      <h3>Отбеливание</h3>
+      <p>Профессиональное отбеливание ZOOM 4 — до 8 тонов светлее за один визит.</p>
+    </div>
+    <div class="service-card reveal" onclick="fakeAction('Ортодонтия')">
+      <div class="service-icon">😁</div>
+      <h3>Ортодонтия</h3>
+      <p>Брекет-системы и прозрачные элайнеры для идеально ровного зубного ряда.</p>
+    </div>
+    <div class="service-card reveal" onclick="fakeAction('Детская стоматология')">
+      <div class="service-icon">🧒</div>
+      <h3>Детская стоматология</h3>
+      <p>Лечение в игровой форме, без страха и слёз. Мультфильмы и подарки каждому.</p>
+    </div>
+    <div class="service-card reveal" onclick="fakeAction('Хирургия')">
+      <div class="service-icon">🩺</div>
+      <h3>Хирургия</h3>
+      <p>Удаление зубов любой сложности, пластика дёсен и костная аугментация.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA BAND ===== -->
+<div class="reveal">
+  <div class="cta-band">
+    <h2>Первый визит — бесплатно</h2>
+    <p>Осмотр, консультация и план лечения — без оплаты. Запишитесь прямо сейчас!</p>
+    <button class="btn-white" onclick="fakeAction('Запись на бесплатный визит')">
+      Записаться на приём
+    </button>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer id="contacts">
+  <div class="footer-inner">
+    <div>
+      <div class="logo">
+        <div class="logo-icon">🦷</div>
+        Oxy<span>gen</span>
+      </div>
+      <p>Стоматология нового поколения.<br>Лечим с любовью, заботимся о каждом.</p>
+    </div>
+    <div>
+      <h4>Клиника</h4>
+      <ul>
+        <li><a onclick="fakeAction('О нас')">О нас</a></li>
+        <li><a onclick="fakeAction('Врачи')">Врачи</a></li>
+        <li><a onclick="fakeAction('Отзывы')">Отзывы</a></li>
+        <li><a onclick="fakeAction('Вакансии')">Вакансии</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Контакты</h4>
+      <ul>
+        <li><a onclick="fakeAction('+7 (999) 123-45-67')">+7 (999) 123-45-67</a></li>
+        <li><a onclick="fakeAction('info@oxygen-dent.ru')">info@oxygen-dent.ru</a></li>
+        <li><a onclick="fakeAction('г. Москва, ул. Улыбки, 12')">г. Москва, ул. Улыбки, 12</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 Стоматология Oxygen. Все права защищены. Сайт-демо для показа.
+  </div>
+</footer>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">
+  <span>✅</span>
+  <span id="toastText">Готово!</span>
+</div>
+
+<script>
+  // Fake action — показывает тост вместо перехода
+  function fakeAction(label) {
+    const toast = document.getElementById('toast');
+    const text = document.getElementById('toastText');
+    text.textContent = '«' + label + '» — демо-кнопка, всё работает 😉';
+    toast.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+  }
+
+  // Shadow on scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
